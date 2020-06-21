@@ -6,21 +6,25 @@ import GlobalStyle from './GlobalStyle';
 import Header from './components/Header';
 import Routing from './components/Routing';
 import Footer from './components/Footer';
-import Cookies from 'js-cookie';
 
 const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
 `;
 
 const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-top: 5em;
+  justify-content: baseline;
+  margin-top: 20px;
   width: 100%;
   height: 100%;
   margin-bottom: 3.5em;
+  grid-area: main;
 `;
 
 function App() {

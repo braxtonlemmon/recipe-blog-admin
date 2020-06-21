@@ -13,6 +13,7 @@ const FooterBar = styled.footer`
   z-index: 5;
   display: flex;
   justify-content: center;
+  grid-area: footer;
 `;
 
 function Footer(props) {

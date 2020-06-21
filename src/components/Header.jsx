@@ -6,8 +6,8 @@ import Button from './shared/Button';
 // import { isLoggedIn } from '../utils/Utils';
 
 const HeaderBar = styled.div`
-  flex-shrink: 0;
-  position: fixed;
+  /* position: fixed; */
+  position: sticky;
   top: 0;
   left: 0;
   display: flex;
@@ -18,6 +18,7 @@ const HeaderBar = styled.div`
   justify-content: space-between;
   border-bottom: 3px dashed black;
   z-index: 10;
+  grid-area: header;
 `;
 
 const MyH1 = styled(H1)`
@@ -50,6 +51,7 @@ function Header(props) {
         <Buttons>
           <Link to="/"><Button>Home</Button></Link>
           <Link to="/recipes"><Button>Recipes</Button></Link>
+          <Link to="/comments"><Button>Comments</Button></Link>
           <Link to="/new"><Button>New</Button></Link>
           <Button onClick={props.handleLogout}>Log out</Button>
         </Buttons>
