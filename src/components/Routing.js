@@ -28,7 +28,7 @@ function Routing(props) {
       <PrivateRoute path='/new'                    component={RecipeFormContainer} />
       <PrivateRoute path='/recipes/:recipeid/edit' component={RecipeFormContainer} />
       <PrivateRoute path='/recipes/:id'            component={RecipePage} />
-      <PrivateRoute path='/comments'               component={Comments} />
+      <PrivateRoute exact path='/comments'               component={Comments} />
       <Route path="/login">
         <LoginFormContainer
           handleLogin={props.handleLogin}
