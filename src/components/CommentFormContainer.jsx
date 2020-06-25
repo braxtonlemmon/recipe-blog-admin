@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import CommentFormComponent from './CommentFormComponent';
 import PropTypes from 'prop-types';
 
-function CommentFormContainer({ mongodb_id, setCommentsLoaded }) {
+function CommentFormContainer({ comment, setCommentsLoaded, setEditing }) {
   const [data, setData] = useState({
-    name: '',
-    content: '',
+    name: comment.name,
+    content: comment.content,
   });
 
   const handleChange = (e) => {
@@ -13,17 +13,19 @@ function CommentFormContainer({ mongodb_id, setCommentsLoaded }) {
     setData({ ...data, [name]: value });
   }
 
-  const handleSubmit = (e, level) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
     if (data.content.length < 1 || data.content.length > 1000) {
       return alert('wrongo');
     }
     setData({ name: '', content: '' });
+    const { recipe, level, parent, created, answered, fromAdmin } = comment;
     // fetch('/api/comments/', {
-    fetch(`http://localhost:4000/dev/api/comments/`, {
+    fetch(`http://localhost:4000/dev/api/comments/${comment._id}`, {
 
     // fetch('https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments', {
-      method: 'POST',
+      method: 'PUT',
+      credentials: 'include',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -31,14 +33,19 @@ function CommentFormContainer({ mongodb_id, setCommentsLoaded }) {
       body: JSON.stringify({
         name: data.name,
         content: data.content,
-        recipe: mongodb_id,
-        level: level
+        recipe: recipe,
+        level: level,
+        parent: parent,
+        created: created,
+        answered: answered,
+        fromAdmin: fromAdmin
       })
     })
       .then(response => {
         if (response.ok && response.status === 200) {
           setCommentsLoaded(false);
-          return response.json();
+          setEditing(false);
+          return;
         }
         throw new Error('Network response was not okay');
       })
@@ -48,14 +55,14 @@ function CommentFormContainer({ mongodb_id, setCommentsLoaded }) {
   return (
     <CommentFormComponent
       handleChange={handleChange}
-      handleSubmit={handleSubmit}
+      handleUpdate={handleUpdate}
       data={data}
     />
   )
 }
 
 CommentFormContainer.propTypes = {
-  mongodb_id: PropTypes.string,
+  comment: PropTypes.object,
   setCommentsLoaded: PropTypes.func,
 }
 

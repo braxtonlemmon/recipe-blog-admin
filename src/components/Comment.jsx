@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ReplyFormContainer from './ReplyFormContainer';
 import PropTypes from 'prop-types';
 import Button from './Button';
+import CommentFormContainer from './CommentFormContainer';
 import { Link } from 'react-router-dom';
 
 const CommentRow = styled.div`
@@ -31,6 +32,10 @@ const CommentRow = styled.div`
   .comment-date {
     font-size: 0.8em;
     font-style: italic;
+  }
+  .comment-recipe {
+    padding: 10px;
+    color: darkblue;
   }
   .comment-content {
     margin: 5px 20px;
@@ -63,12 +68,12 @@ const ReplyButton = styled(Button)`
 
 function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
   const [replyClicked, setReplyClicked] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   const handleReplyClick = () => {
     setReplyClicked(!replyClicked);
   }
   
-  // #updateComment comment.answered: true
   const handleView = (e) => {
     if (e) {
       e.preventDefault();
@@ -105,20 +110,23 @@ function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
     .catch(err => console.log(err.message));
   }
 
-  // #createComment and #updateComment
-  // new Comment and parentComment.answered: true
   const handleReply = () => {
     if (comment.answered !== true) {
       handleView(null, comment._id)
     }
   }
 
-  // #deleteComment 
-  const handleDelete = (e, id) => {
+  const handleEdit = (e) => {
+    e.preventDefault();
+    console.log(`editing ${comment._id}`)
+    setEditing(old => !old)
+  }
+ 
+  const handleDelete = (e) => {
     e.preventDefault();
     const verify = window.confirm('Are you sure you want to delete this comment?');
     if (verify === true) {
-      fetch(`/comments/${id}`, {
+      fetch(`/comments/${comment._id}`, {
         method: 'DELETE',
         headers: {
           Accept: 'application/json',
@@ -148,8 +156,16 @@ function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
         <span className="comment-name">{comment.name.toUpperCase()}</span>
         <span className="comment-date">{comment.dateFormatted}</span>
       </div>
-      <p className="comment-content">{comment.content}</p>
-      <Link to={`/recipes/${comment.recipe}`}>recipe</Link>
+      { 
+        editing
+        ? <CommentFormContainer 
+            setCommentsLoaded={setCommentsLoaded}
+            comment={comment}
+            setEditing={setEditing}
+          />
+        : <p className="comment-content">{comment.content}</p>
+      }
+      <Link className="comment-recipe" to={`/recipes/${comment.recipe._id}`}>{comment.recipe.title}</Link>
       {replyClicked &&
         <ReplyFormContainer
           parent={comment._id}
@@ -159,9 +175,11 @@ function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
         />
       }
       <Buttons>
-        {!seen && <Button onClick={e => handleView(e)}>Seen</Button> }
-        <Button>Edit</Button>
-        <Button onClick={e => handleDelete(e, comment._id)}>Delete</Button>
+        {!seen && 
+        <Button onClick={handleView}>Seen</Button> 
+        }
+        <Button onClick={handleEdit}>Edit</Button>
+        <Button onClick={handleDelete}>Delete</Button>
         <Button onClick={handleReplyClick}>{replyClicked ? 'Close' : 'Reply'}</Button>
       </Buttons>
     </CommentRow>

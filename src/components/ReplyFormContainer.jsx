@@ -29,6 +29,7 @@ function ReplyFormContainer({ parent, recipe, setCommentsLoaded, handleReply }) 
 
       // fetch('https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
