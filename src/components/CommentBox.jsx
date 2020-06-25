@@ -54,25 +54,27 @@ function CommentBox(props) {
   const history = useHistory();
   
   const handleDelete = (id, recipe) => {
-    fetch(`/comments/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        commentid: id
+    const verify = window.confirm('Are you sure you want to delete this comment?');
+    if (verify === true) {
+      fetch(`/comments/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
       })
-    })
-    .then(response => {
-      if (response.ok && response.status === 200) {
-        history.push(`/recipes/${recipe}`);
-        return response.json();
-      }
-      throw new Error('Network response was not okay.');
-    })
-    .catch(err => console.log(err.message));
+      .then(response => {
+        if (response.ok && response.status === 200) {
+          props.setRecipeCommentsLoaded(false);
+          console.log('yo');
+          // history.push(`/recipes/${recipe}`);
+          return;
+        }
+        throw new Error('Network response was not okay.');
+      })
+      .catch(err => console.log('w'));
+    }
   }
 
   const generateComments = () => {
@@ -94,17 +96,23 @@ function CommentBox(props) {
     })
     return allComments;
   }
-  
-  return(
-    <Wrapper>
-      <h2>COMMENTS</h2>
-      <div>{
-        props.comments.length === 0 ?
-        '- No comments yet -' :
-        generateComments()}
-      </div>
-    </Wrapper>
-  )
+  if (props.commentsLoaded) {
+    return (
+      <Wrapper>
+        <h2>COMMENTS</h2>
+        <div>{
+          props.comments.length === 0 ?
+          '- No comments yet -' :
+          generateComments()}
+        </div>
+      </Wrapper>
+    )
+  } else {
+    return (
+      <h1>loading...</h1>
+    )
+  }
+
 }
 
 export default CommentBox;

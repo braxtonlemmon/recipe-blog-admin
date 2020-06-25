@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Comment from './Comment';
-import { useHistory } from 'react-router-dom';
 import Button from './shared/Button';
 
 const Buttons = styled.div`
@@ -10,13 +9,25 @@ const Buttons = styled.div`
   grid-auto-flow: column;
 `;
 
-function Comments() {
-  const history = useHistory();
-  const [comments, setComments] = useState([]);
-  const [commentsLoaded, setCommentsLoaded] = useState(false);
-  const [viewAll, setViewAll] = useState(true);
-  const [viewUnseen, setViewUnseen] = useState(false);
+const FilterButton = styled(Button)`
+  border: ${props => props.selected ? '2px solid black' : 'none'};
+`
 
+function Comments({ allComments, commentsLoaded, setCommentsLoaded }) {
+  const [comments, setComments] = useState([]);
+  const [unseen, setUnseen] = useState([]);
+  const [viewAll, setViewAll] = useState(false);
+  const [viewUnseen, setViewUnseen] = useState(true);
+
+  useEffect(() => {
+    setUnseen(filterUnseen(allComments));
+    setComments(allComments);
+  }, [allComments])
+
+  const removeUnseen = (id) => {
+    const filtered = unseen.filter(comment => comment.id !== id);
+    setUnseen(filtered);
+  }
 
   const handleViewAll = (e) => {
     e.preventDefault();
@@ -34,85 +45,50 @@ function Comments() {
     }
   }
 
-  // #createComment and #updateComment
-  // new Comment and parentComment.answered: true
-  const handleReply = (e) => {
-    e.preventDefault();
-    console.log('reply to comment')
+  const filterUnseen = (data) => {
+    const filteredComments = data.filter(comment => !comment.answered)
+    return filteredComments;
   }
-
-  // #updateComment comment.answered: true
-  const handleView = (e, id) => {
-    e.preventDefault();
-    console.log(`comment ${id} viewed...`);
-  }
-  
-  // #deleteComment
-  const handleDelete = (e, id) => {
-    e.preventDefault();
-    const verify = window.confirm('Are you sure you want to delete this comment?');
-    if (verify === true) {
-      fetch(`/comments/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-      })
-      .then(response => {
-        if (response.ok && response.status === 200) {
-          history.push('/comments');
-          return response.json();
-        }
-        throw new Error('Network response was not okay.');
-      })
-      .catch(err => console.log(err.message));
-    }
-  }
-
-
-  useEffect(() => {
-    fetch('/comments', {
-      method: 'GET',
-      credentials: 'include'
-    })
-    .then(result => result.json())
-    .then(data => {
-      setComments(data.data);
-      setCommentsLoaded(true);
-    })
-    .catch(err => console.log(err))
-  }, [commentsLoaded])
 
   if (commentsLoaded) {
     return (
       <>
         <Buttons>
-          <Button onClick={e => handleViewAll(e)}>All</Button>
-          <Button onClick={e => handleViewUnseen(e)}>Unseen</Button>
+          <FilterButton selected={viewAll === true} onClick={e => handleViewAll(e)}>All</FilterButton>
+          <FilterButton selected={viewUnseen === true} onClick={e => handleViewUnseen(e)}>Unseen</FilterButton>
         </Buttons>
         <div>
           {
             viewAll &&
             comments.map(comment => (
               <Comment
-              comment={comment}
-              setCommentsLoaded={setCommentsLoaded}
-              handleDelete={handleDelete}
-              handleView={handleView}
+                comment={comment}
+                seen={true}
+                setCommentsLoaded={setCommentsLoaded}
               />
               ))
           }
-          {viewUnseen &&
-            <h2>yo</h2>
+          {
+            viewUnseen &&
+            unseen.map(comment => (
+              <Comment
+                comment={comment}
+                removeUnseen={removeUnseen}
+                setCommentsLoaded={setCommentsLoaded}
+              />
+            ))
           }
         </div>
       </>
     )
   } else {
     return (
-      <h1>loading...</h1>
+      <>
+        <Buttons>
+          <FilterButton selected={viewAll} onClick={e => handleViewAll(e)}>All</FilterButton>
+          <FilterButton selected={viewUnseen} onClick={e => handleViewUnseen(e)}>Unseen</FilterButton>
+        </Buttons>
+      </>
     )
   }
 }

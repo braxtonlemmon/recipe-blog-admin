@@ -3,7 +3,7 @@ import ReplyFormComponent from './ReplyFormComponent';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-function ReplyFormContainer({ parent, recipe, setCommentsLoaded }) {
+function ReplyFormContainer({ parent, recipe, setCommentsLoaded, handleReply }) {
   const history = useHistory();
   const [data, setData] = useState({
     name: 'Braxton',
@@ -19,6 +19,7 @@ function ReplyFormContainer({ parent, recipe, setCommentsLoaded }) {
 
   const handleSubmit = (e, level) => {
     e.preventDefault();
+    handleReply();
     if (data.content.length < 1 || data.content.length > 1000) {
       return alert('wrongo');
     }

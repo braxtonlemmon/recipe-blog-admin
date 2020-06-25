@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import RecipeFormComponent from './RecipeFormComponent';
 import { useParams, useHistory } from 'react-router-dom';
 
-function RecipeFormContainer() {
+function RecipeFormContainer({ setRecipesLoaded }) {
   const history = useHistory();
   const { recipeid } = useParams();
   const [recipe, setRecipe] = useState(null);
@@ -26,7 +26,6 @@ function RecipeFormContainer() {
       })
       .then(result => result.json())
       .then(final => {
-          console.log(final.data);
           setRecipe(final.data);
         })
       .catch(err => console.log('problem!'))
@@ -82,6 +81,7 @@ function RecipeFormContainer() {
       throw new Error('Network response was not okay uploading recipe');
     })
     .then(data => {
+      setRecipesLoaded(false)
       history.push(`/recipes`);
     })
     .catch(err => console.log(err.message));
@@ -89,7 +89,6 @@ function RecipeFormContainer() {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    // let formData = new FormData();
     fetch(`/recipes/${recipeid}`, {
       method: 'PUT',
       credentials: 'include',
@@ -114,6 +113,7 @@ function RecipeFormContainer() {
       throw new Error('Network response was not okay');
     })
     .then(data => {
+      setRecipesLoaded(false);
       history.push(`/recipes`);
     })
     .catch(err => console.log(err.message));

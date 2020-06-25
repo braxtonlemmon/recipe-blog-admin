@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { H1, H2 } from './Shared';
 
 const Wrapper = styled.div`
@@ -36,20 +36,7 @@ const Row = styled.div`
   }
 `;
 
-function Recipes() {
-  const history = useHistory();
-  const [recipes, setRecipes] = useState([]);
-  const [recipesLoaded, setRecipesLoaded] = useState(false);
-
-  useEffect(() => {
-    fetch('/recipes', {
-      method: 'get'
-    })
-    .then(result => result.json())
-    .then(data => setRecipes(data.data))
-    .then(() => setRecipesLoaded(true))
-  }, [])
-
+function Recipes({ recipes, recipesLoaded, setRecipesLoaded }) {
   const handleDelete = (id) => {
     const verify = window.confirm('Are you sure you want to delete this recipe?');
     if (verify === true) {
@@ -66,7 +53,7 @@ function Recipes() {
       })
       .then(response => {
         if (response.ok && response.status === 200) {
-          history.push('/recipes');
+          setRecipesLoaded(false);
           return response.json();
         }
         throw new Error('Network response was not okay.');
@@ -101,11 +88,11 @@ function Recipes() {
                   <p>🖉</p>
                 </Link>
               </div>
-              <a className="item">
+              <div className="item">
                 <p className="button" onClick={() => handleDelete(recipe._id)}>
                   🗑️
                 </p>
-              </a>
+              </div>
             </Row>
           ))}
         </ul>

@@ -30,6 +30,11 @@ const Main = styled.div`
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [recipesLoaded, setRecipesLoaded] = useState(false);
+  const [commentsLoaded, setCommentsLoaded] = useState(false);
+  const [recipes, setRecipes] = useState([]);
+  const [comments, setComments] = useState([]);
+
   const history = useHistory();
 
   const handleLogin = (name) => {
@@ -37,6 +42,7 @@ function App() {
     setCurrentUser(name);
   }
 
+  // Fish for JWT
   useEffect(() => {
     fetch('/me', {
       credentials: 'include',
@@ -56,6 +62,28 @@ function App() {
     })
     .catch(err => console.log('problem'));
   }, [])
+
+  // GET recipes from API
+  useEffect(() => {
+    fetch('/recipes', {
+      method: 'GET'
+    })
+    .then(result => result.json())
+    .then(data => setRecipes(data.data))
+    .then(() => setRecipesLoaded(true))
+    .catch(err => console.log(err))
+  }, [recipesLoaded])
+
+  // GET comments from API
+  useEffect(() => {
+    fetch('/comments', {
+      method: 'GET'
+    })
+    .then(result => result.json())
+    .then(data => setComments(data.data))
+    .then(() => setCommentsLoaded(true))
+    .catch(err => console.log(err))
+  }, [commentsLoaded])
   
   const handleLogout = () => {
     fetch('/auth/logout')
@@ -78,8 +106,15 @@ function App() {
         <Routing 
           isLoggedIn={isLoggedIn}
           handleLogin={handleLogin}
+          recipes={recipes}
+          comments={comments}
+          recipesLoaded={recipesLoaded}
+          commentsLoaded={commentsLoaded}
+          setCommentsLoaded={setCommentsLoaded}
+          setRecipesLoaded={setRecipesLoaded}
         />
       </Main>
+
       <Footer 
         isLoggedIn={isLoggedIn}
         currentUser={currentUser}

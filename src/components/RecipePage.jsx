@@ -48,11 +48,11 @@ const Image = styled.div`
   }
 `;
 
-function RecipePage() {
+function RecipePage({ setCommentsLoaded, commentsLoaded }) {
   const [recipe, setRecipe] = useState({});
-  const [comments, setComments] = useState([]);
+  const [recipeComments, setRecipeComments] = useState([]);
   const [recipeLoaded, setRecipeLoaded] = useState(false);
-  const [commentsLoaded, setCommentsLoaded] = useState(false);
+  const [recipeCommentsLoaded, setRecipeCommentsLoaded] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -74,10 +74,11 @@ function RecipePage() {
       method: 'get'
     })
       .then(result => result.json())
-      .then(data => setComments(data.data))
-      .then(() => setCommentsLoaded(true));
-  }, [id]);
-  if (recipeLoaded && commentsLoaded) {
+      .then(data => setRecipeComments(data.data))
+      .then(() => setRecipeCommentsLoaded(true));
+  }, [id, recipeCommentsLoaded]);
+
+  if (recipeLoaded && recipeCommentsLoaded) {
 
     return (
       <Wrapper>
@@ -104,7 +105,12 @@ function RecipePage() {
           ))}
           </ul>
         </InfoBox>
-      <CommentBox comments={comments} />
+      <CommentBox 
+        comments={recipeComments} 
+        setCommentsLoaded={setCommentsLoaded}
+        commentsLoaded={commentsLoaded}
+        setRecipeCommentsLoaded={setRecipeCommentsLoaded}
+      />
     </Wrapper>
   );
 } else {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ReplyFormContainer from './ReplyFormContainer';
 import PropTypes from 'prop-types';
 import Button from './Button';
+import { Link } from 'react-router-dom';
 
 const CommentRow = styled.div`
   position: relative;
@@ -12,7 +13,7 @@ const CommentRow = styled.div`
   width: 90%;
   padding: 15px;
   /* padding-bottom: 30px; */
-  background: rgba(247, 191, 247, 0.78);
+  background: ${props => props.fromAdmin ? 'lightgreen' : 'rgba(247, 191, 247, 0.78)'};
   box-shadow: -2px 2px 2px lightgrey;
   margin: 15px;
   border-radius: 8px;
@@ -58,39 +59,111 @@ const ReplyButton = styled(Button)`
   right: 10px;
   bottom: 10px;
   padding: 3px;
-  `;
+`;
 
-function Comment({ comment, setCommentsLoaded, handleDelete, handleView }) {
+function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
   const [replyClicked, setReplyClicked] = useState(false);
 
   const handleReplyClick = () => {
     setReplyClicked(!replyClicked);
   }
+  
+  // #updateComment comment.answered: true
+  const handleView = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    const { id, name, content, recipe, parent, level, fromAdmin } = comment;
+    console.log(`comment ${id} viewed...`);
+    fetch(`/comments/${id}`, {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        content,
+        recipe,
+        parent,
+        level,
+        answered: !comment.answered,
+        fromAdmin,
+      })
+    })
+    .then(response => {
+      if (response.ok && response.status === 200) {
+        return response.json();
+      }
+      throw new Error('Network response was not okay');
+    })
+    .then(data => {
+      removeUnseen(id);
+      console.log(data);
+    })
+    .catch(err => console.log(err.message));
+  }
+
+  // #createComment and #updateComment
+  // new Comment and parentComment.answered: true
+  const handleReply = () => {
+    if (comment.answered !== true) {
+      handleView(null, comment._id)
+    }
+  }
+
+  // #deleteComment 
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    const verify = window.confirm('Are you sure you want to delete this comment?');
+    if (verify === true) {
+      fetch(`/comments/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      })
+        .then(response => {
+          if (response.ok && response.status === 200) {
+            setCommentsLoaded(false);
+            return;
+          }
+          throw new Error('Network response was not okay.');
+        })
+        .catch(err => console.log(err.message));
+    }
+  }
+
 
   return (
     <CommentRow
       key={comment._id}
       id={comment._id}
+      fromAdmin={comment.fromAdmin}
     >
       <div className="comment-info">
         <span className="comment-name">{comment.name.toUpperCase()}</span>
         <span className="comment-date">{comment.dateFormatted}</span>
       </div>
       <p className="comment-content">{comment.content}</p>
+      <Link to={`/recipes/${comment.recipe}`}>recipe</Link>
       {replyClicked &&
         <ReplyFormContainer
           parent={comment._id}
           recipe={comment.recipe}
           setCommentsLoaded={setCommentsLoaded}
+          handleReply={handleReply}
         />
       }
       <Buttons>
-        <Button onClick={e => handleView(e, comment._id)}>Seen</Button>
+        {!seen && <Button onClick={e => handleView(e)}>Seen</Button> }
         <Button>Edit</Button>
         <Button onClick={e => handleDelete(e, comment._id)}>Delete</Button>
         <Button onClick={handleReplyClick}>{replyClicked ? 'Close' : 'Reply'}</Button>
       </Buttons>
-      {/* <ReplyButton onClick={handleReplyClick}>{replyClicked ? 'Close' : 'Reply'}</ReplyButton> */}
     </CommentRow>
   )
 }
