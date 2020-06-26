@@ -39,7 +39,6 @@ const Image = styled.div`
   width: 250px;
   background-size: cover;
   background-position: center;
-  /* border-radius: 15px; */
   box-shadow: -12px 7px 2px #383838, 12px 12px 2px #5c5c5c;
   margin: 20px;
   @media (min-width: 600px) {
@@ -83,7 +82,7 @@ function RecipePage({ setCommentsLoaded, commentsLoaded }) {
     return (
       <Wrapper>
       <H1>{recipe.title}</H1>
-      <Image url={recipe.image}></Image>
+      <Image url={recipe.images[0]}></Image>
       <InfoBox>
         <H2>About</H2>
         <p>{recipe.intro}</p>

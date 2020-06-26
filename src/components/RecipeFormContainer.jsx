@@ -11,9 +11,9 @@ function RecipeFormContainer({ setRecipesLoaded }) {
     title: '',
     ingredients: [''],
     steps: [''],
+    images: [''],
     intro: '',
     quote: '',
-    image: '',
     is_published: false,
     created: ''
   })
@@ -41,7 +41,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         steps: recipe.steps,
         intro: recipe.intro,
         quote: recipe.quote,
-        image: recipe.image,
+        images: recipe.images,
         is_published: recipe.is_published,
         created: recipe.created
       })
@@ -69,7 +69,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         ingredients: JSON.stringify(data.ingredients),
         steps: JSON.stringify(data.steps),
         intro: data.intro,
-        image: data.image,
+        images: JSON.stringify(data.images),
         quote: data.quote,
         is_published: data.is_published
       })
@@ -101,7 +101,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         ingredients: JSON.stringify(data.ingredients),
         steps: JSON.stringify(data.steps),
         intro: data.intro,
-        image: data.image,
+        images: JSON.stringify(data.images),
         quote: data.quote,
         is_published: data.is_published
       })
@@ -131,22 +131,72 @@ function RecipeFormContainer({ setRecipesLoaded }) {
       values[index] = value;
       setData({...data, steps: values});
     }
+    else if (name === 'image') {
+      const values = [...data.images];
+      values[index] = value;
+      setData({...data, images: values});
+    }
+  }
+
+  const updateData = (type, values) => {
+    switch (type) {
+      case 'step':
+        setData({...data, steps: values});
+        break;
+      case 'ingredient':
+        setData({...data, ingredients: values});
+        break;
+      case 'image':
+        setData({...data, images: values});
+        break;
+      default:
+        return null;
+    }
   }
 
   const handleMove = (e, index, type, direction) => {
     e.preventDefault();
-    const values = type === 'step' ? [...data.steps] : [...data.ingredients];
+    let values;
+    switch (type) {
+      case 'step':
+        values = [...data.steps];
+        break;
+      case 'ingredient':
+        values = [...data.ingredients];
+        break;
+      case 'image':
+        values = [...data.images];
+        break;
+      default:
+        return null;
+    }
+
     const hold = values[index];
     if (direction === 'down' && index < values.length - 1) {
       values[index] = values[index + 1];
       values[index + 1] = hold;
-      type === 'step' ? setData({...data, steps: values}) : setData({...data, ingredients: values});
+      updateData(type, values);
     }
     else if (direction === 'up' && index > 0) {
       values[index] = values[index - 1];
       values[index - 1] = hold;
-      type === 'step' ? setData({ ...data, steps: values }) : setData({ ...data, ingredients: values });
+      updateData(type, values);
     }
+  }
+
+  const handleAddImage = (e) => {
+    e.preventDefault();
+    const values = [...data.images];
+    values.push('');
+    setData({ ...data, images: values });
+  }
+
+  const handleRemoveImage = (e, index) => {
+    e.preventDefault();
+    console.log(index);
+    const values = [...data.images];
+    values.splice(index, 1);
+    setData({ ...data, images: values });
   }
 
   const handleAddIngredient = (e) => {
@@ -185,6 +235,8 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleInputChange={handleInputChange}
+        handleAddImage={handleAddImage}
+        handleRemoveImage={handleRemoveImage}
         handleAddIngredient={handleAddIngredient}
         handleRemoveIngredient={handleRemoveIngredient}
         handleAddStep={handleAddStep}

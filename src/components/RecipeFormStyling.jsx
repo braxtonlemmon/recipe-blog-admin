@@ -35,7 +35,7 @@ export const Form = styled.form`
   h2 {
     font-size: 1.3em;
   }
-  .ingredients-box, .steps-box {
+  .ingredients-box, .steps-box, .images-box {
     background: none;
   }
   .publish-box {
