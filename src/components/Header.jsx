@@ -39,7 +39,7 @@ const Buttons = styled.div`
 function Header(props) {
   return (
     <HeaderBar>
-      <MyH1>decoded recipes</MyH1>
+      <MyH1>Peel the Garlic</MyH1>
       {!props.isLoggedIn && (
         <Buttons>
           <Link to="/login">
