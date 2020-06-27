@@ -36,7 +36,7 @@ const Row = styled.div`
   }
 `;
 
-function Recipes({ recipes, recipesLoaded, setRecipesLoaded }) {
+function Recipes({ recipes, recipesLoaded, setRecipesLoaded, setCommentsLoaded }) {
   const handleDelete = (id) => {
     const verify = window.confirm('Are you sure you want to delete this recipe?');
     if (verify === true) {
@@ -54,6 +54,7 @@ function Recipes({ recipes, recipesLoaded, setRecipesLoaded }) {
       .then(response => {
         if (response.ok && response.status === 200) {
           setRecipesLoaded(false);
+          setCommentsLoaded(false);
           return response.json();
         }
         throw new Error('Network response was not okay.');

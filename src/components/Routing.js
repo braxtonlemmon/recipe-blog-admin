@@ -56,6 +56,7 @@ function Routing({
         recipes={recipes}
         recipesLoaded={recipesLoaded}
         setRecipesLoaded={setRecipesLoaded}
+        setCommentsLoaded={setCommentsLoaded}
         isLoggedIn={isLoggedIn}
       />
       <PrivateRoute

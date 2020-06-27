@@ -33,7 +33,7 @@ function CommentFormContainer({ comment, setCommentsLoaded, setEditing }) {
       body: JSON.stringify({
         name: data.name,
         content: data.content,
-        recipe: recipe,
+        recipe: recipe._id,
         level: level,
         parent: parent,
         created: created,
