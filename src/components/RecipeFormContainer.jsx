@@ -15,7 +15,8 @@ function RecipeFormContainer({ setRecipesLoaded }) {
     intro: '',
     quote: '',
     is_published: false,
-    created: ''
+    created: '',
+    duration: 0
   })
   
   useEffect(() => {
@@ -42,6 +43,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         intro: recipe.intro,
         quote: recipe.quote,
         images: recipe.images,
+        duration: recipe.duration,
         is_published: recipe.is_published,
         created: recipe.created
       })
@@ -69,6 +71,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         ingredients: JSON.stringify(data.ingredients),
         steps: JSON.stringify(data.steps),
         intro: data.intro,
+        duration: data.duration,
         images: JSON.stringify(data.images),
         quote: data.quote,
         is_published: data.is_published
@@ -101,6 +104,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         ingredients: JSON.stringify(data.ingredients),
         steps: JSON.stringify(data.steps),
         intro: data.intro,
+        duration: data.duration,
         images: JSON.stringify(data.images),
         quote: data.quote,
         is_published: data.is_published

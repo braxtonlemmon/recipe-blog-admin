@@ -21,7 +21,7 @@ function CommentFormContainer({ comment, setCommentsLoaded, setEditing }) {
     setData({ name: '', content: '' });
     const { recipe, level, parent, created, answered, fromAdmin } = comment;
     // fetch('/api/comments/', {
-    fetch(`http://localhost:4000/dev/api/comments/${comment._id}`, {
+    fetch(`/comments/${comment._id}`, {
 
     // fetch('https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments', {
       method: 'PUT',

@@ -65,6 +65,16 @@ function RecipeFormComponent(props) {
           />
         </Box>
         <Box>
+          <label htmlFor="duration">Duration (min)</label>
+          <input
+            type="number"
+            id="duration"
+            name="duration"
+            value={props.data.duration}
+            onChange={props.handleChange}
+          />
+        </Box>
+        <Box>
           <label htmlFor="intro">Description</label>
           <textarea
             name="intro"
