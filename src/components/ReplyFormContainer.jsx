@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import ReplyFormComponent from './ReplyFormComponent';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 
 function ReplyFormContainer({ parent, recipe, setCommentsLoaded, handleReply }) {
-  const history = useHistory();
   const [data, setData] = useState({
     name: 'Braxton',
     content: '',

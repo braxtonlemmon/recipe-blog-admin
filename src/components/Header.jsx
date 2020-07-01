@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { H1, H2 } from './Shared';
+import { H1 } from './Shared';
 import Button from './shared/Button';
-// import { isLoggedIn } from '../utils/Utils';
 
 const HeaderBar = styled.div`
   /* position: fixed; */

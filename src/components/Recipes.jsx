@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { H1, H2 } from './Shared';
+import { H1 } from './Shared';
+import Emoji from 'a11y-react-emoji';
 
 const Wrapper = styled.div`
   display: flex;
@@ -86,13 +87,16 @@ function Recipes({ recipes, recipesLoaded, setRecipesLoaded, setCommentsLoaded }
               </div>
               <div className="item">
                 <Link to={`/recipes/${recipe._id}/edit`}>
-                  <p>🖉</p>
+                  <Emoji symbol="🖉" label="edit" />
                 </Link>
               </div>
               <div className="item">
-                <p className="button" onClick={() => handleDelete(recipe._id)}>
-                  🗑️
-                </p>
+                <Emoji 
+                  className="button" 
+                  onClick={() => handleDelete(recipe._id)}
+                  symbol="🗑️"
+                  label="delete"
+                />
               </div>
             </Row>
           ))}

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 
 const Wrapper = styled.div`
   display: flex;
@@ -51,8 +50,6 @@ const CommentRow = styled.div`
 `;
 
 function CommentBox(props) {
-  const history = useHistory();
-  
   const handleDelete = (id, recipe) => {
     const verify = window.confirm('Are you sure you want to delete this comment?');
     if (verify === true) {
@@ -67,8 +64,6 @@ function CommentBox(props) {
       .then(response => {
         if (response.ok && response.status === 200) {
           props.setRecipeCommentsLoaded(false);
-          console.log('yo');
-          // history.push(`/recipes/${recipe}`);
           return;
         }
         throw new Error('Network response was not okay.');

@@ -52,7 +52,7 @@ function App() {
       if (response.ok) {
         return response.json();
       } else {
-        throw "Not yet logged in";
+        throw new Error("Not yet logged in");
       }})
     .then(data => {
       if (data.user) {

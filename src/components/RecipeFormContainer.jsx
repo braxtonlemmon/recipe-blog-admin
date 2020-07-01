@@ -48,7 +48,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         created: recipe.created
       })
     }
-   }, [recipe])
+   }, [recipe, data])
 
   const handleChange = (e) => {
     const name = e.target.name;

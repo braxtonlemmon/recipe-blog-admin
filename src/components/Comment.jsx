@@ -59,13 +59,6 @@ const Buttons = styled.div`
   justify-content: space-around;
 `;
 
-const ReplyButton = styled(Button)`
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  padding: 3px;
-`;
-
 function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
   const [replyClicked, setReplyClicked] = useState(false);
   const [editing, setEditing] = useState(false);
