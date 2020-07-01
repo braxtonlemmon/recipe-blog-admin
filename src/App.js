@@ -66,7 +66,8 @@ function App() {
   // GET recipes from API
   useEffect(() => {
     fetch('/recipes', {
-      method: 'GET'
+      method: 'GET',
+      credentials: 'include'
     })
     .then(result => result.json())
     .then(data => setRecipes(data.data))
@@ -77,7 +78,8 @@ function App() {
   // GET comments from API
   useEffect(() => {
     fetch('/comments', {
-      method: 'GET'
+      method: 'GET',
+      credentials: 'include'
     })
     .then(result => result.json())
     .then(data => setComments(data.data))
