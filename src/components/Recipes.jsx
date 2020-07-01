@@ -41,26 +41,29 @@ function Recipes({ recipes, recipesLoaded, setRecipesLoaded, setCommentsLoaded }
   const handleDelete = (id) => {
     const verify = window.confirm('Are you sure you want to delete this recipe?');
     if (verify === true) {
-      fetch(`/recipes/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          recipeid: id
-        })
-      })
-      .then(response => {
-        if (response.ok && response.status === 200) {
-          setRecipesLoaded(false);
-          setCommentsLoaded(false);
-          return response.json();
+      fetch(
+        `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            recipeid: id,
+          }),
         }
-        throw new Error('Network response was not okay.');
-      })
-      .catch(err => console.log(err.message));
+      )
+        .then((response) => {
+          if (response.ok && response.status === 200) {
+            setRecipesLoaded(false);
+            setCommentsLoaded(false);
+            return response.json();
+          }
+          throw new Error("Network response was not okay.");
+        })
+        .catch((err) => console.log(err.message));
     }
   }
     

@@ -2,14 +2,17 @@ import Cookies from 'js-cookie';
 
 function getRecipe(id) {
   let recipe = {};
-  fetch(`/recipes/${id}`, {
-    credentials: 'include',
-    method: 'GET'
-  })
-  .then(result => result.json())
-  .then(data => {
-    recipe = data.data;
-  })
+  fetch(
+    `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${id}`,
+    {
+      credentials: "include",
+      method: "GET",
+    }
+  )
+    .then((result) => result.json())
+    .then((data) => {
+      recipe = data.data;
+    });
   return recipe
 }
 

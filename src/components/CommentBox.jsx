@@ -53,22 +53,25 @@ function CommentBox(props) {
   const handleDelete = (id, recipe) => {
     const verify = window.confirm('Are you sure you want to delete this comment?');
     if (verify === true) {
-      fetch(`/comments/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-      })
-      .then(response => {
-        if (response.ok && response.status === 200) {
-          props.setRecipeCommentsLoaded(false);
-          return;
+      fetch(
+        `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
         }
-        throw new Error('Network response was not okay.');
-      })
-      .catch(err => console.log('w'));
+      )
+        .then((response) => {
+          if (response.ok && response.status === 200) {
+            props.setRecipeCommentsLoaded(false);
+            return;
+          }
+          throw new Error("Network response was not okay.");
+        })
+        .catch((err) => console.log("w"));
     }
   }
 

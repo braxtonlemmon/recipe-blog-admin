@@ -73,34 +73,37 @@ function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
     }
     const { id, name, content, recipe, parent, level, fromAdmin } = comment;
     console.log(`comment ${id} viewed...`);
-    fetch(`/comments/${id}`, {
-      method: 'PUT',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name,
-        content,
-        recipe,
-        parent,
-        level,
-        answered: !comment.answered,
-        fromAdmin,
-      })
-    })
-    .then(response => {
-      if (response.ok && response.status === 200) {
-        return response.json();
+    fetch(
+      `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments/${id}`,
+      {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          content,
+          recipe,
+          parent,
+          level,
+          answered: !comment.answered,
+          fromAdmin,
+        }),
       }
-      throw new Error('Network response was not okay');
-    })
-    .then(data => {
-      removeUnseen(id);
-      console.log(data);
-    })
-    .catch(err => console.log(err.message));
+    )
+      .then((response) => {
+        if (response.ok && response.status === 200) {
+          return response.json();
+        }
+        throw new Error("Network response was not okay");
+      })
+      .then((data) => {
+        removeUnseen(id);
+        console.log(data);
+      })
+      .catch((err) => console.log(err.message));
   }
 
   const handleReply = () => {
@@ -119,22 +122,25 @@ function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
     e.preventDefault();
     const verify = window.confirm('Are you sure you want to delete this comment?');
     if (verify === true) {
-      fetch(`/comments/${comment._id}`, {
-        method: 'DELETE',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-      })
-        .then(response => {
+      fetch(
+        `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments/${comment._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      )
+        .then((response) => {
           if (response.ok && response.status === 200) {
             setCommentsLoaded(false);
             return;
           }
-          throw new Error('Network response was not okay.');
+          throw new Error("Network response was not okay.");
         })
-        .catch(err => console.log(err.message));
+        .catch((err) => console.log(err.message));
     }
   }
 

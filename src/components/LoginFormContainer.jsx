@@ -17,30 +17,33 @@ function LoginFormContainer(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('/auth/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: loginData.username,
-        password: loginData.password
-      })
-    })
-    .then(response => {
-      if (response.ok && response.status === 200) {
-        return response.json();
+    fetch(
+      "https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/auth/login",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: loginData.username,
+          password: loginData.password,
+        }),
       }
-      setLoginData({ username: '', password: ''})
-      throw new Error('Network response was not ok.');
-    })
-    .then(data => {
-      props.handleLogin(data.name);
-      history.push('/');
-      return;
-    })
-    .catch(err => console.log(err.message));
+    )
+      .then((response) => {
+        if (response.ok && response.status === 200) {
+          return response.json();
+        }
+        setLoginData({ username: "", password: "" });
+        throw new Error("Network response was not ok.");
+      })
+      .then((data) => {
+        props.handleLogin(data.name);
+        history.push("/");
+        return;
+      })
+      .catch((err) => console.log(err.message));
   }
   
   return (

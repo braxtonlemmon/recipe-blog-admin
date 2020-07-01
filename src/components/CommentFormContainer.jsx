@@ -21,35 +21,37 @@ function CommentFormContainer({ comment, setCommentsLoaded, setEditing }) {
     setData({ name: '', content: '' });
     const { recipe, level, parent, created, answered, fromAdmin } = comment;
     // fetch('/api/comments/', {
-    fetch(`/comments/${comment._id}`, {
-
-    // fetch('https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments', {
-      method: 'PUT',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: data.name,
-        content: data.content,
-        recipe: recipe._id,
-        level: level,
-        parent: parent,
-        created: created,
-        answered: answered,
-        fromAdmin: fromAdmin
-      })
-    })
-      .then(response => {
+    fetch(
+      `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments/${comment._id}`,
+      {
+        // fetch('https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments', {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data.name,
+          content: data.content,
+          recipe: recipe._id,
+          level: level,
+          parent: parent,
+          created: created,
+          answered: answered,
+          fromAdmin: fromAdmin,
+        }),
+      }
+    )
+      .then((response) => {
         if (response.ok && response.status === 200) {
           setCommentsLoaded(false);
           setEditing(false);
           return;
         }
-        throw new Error('Network response was not okay');
+        throw new Error("Network response was not okay");
       })
-      .catch(err => console.log(err.message));
+      .catch((err) => console.log(err.message));
   }
 
   return (

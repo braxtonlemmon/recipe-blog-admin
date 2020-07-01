@@ -44,56 +44,64 @@ function App() {
 
   // Fish for JWT
   useEffect(() => {
-    fetch('/me', {
-      credentials: 'include',
-      method: 'GET'
+    fetch("https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/me", {
+      credentials: "include",
+      method: "GET",
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Not yet logged in");
-      }})
-    .then(data => {
-      if (data.user) {
-        setIsLoggedIn(true);
-        setCurrentUser(data.user);
-      }
-    })
-    .catch(err => console.log('problem'));
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Not yet logged in");
+        }
+      })
+      .then((data) => {
+        if (data.user) {
+          setIsLoggedIn(true);
+          setCurrentUser(data.user);
+        }
+      })
+      .catch((err) => console.log("problem"));
   }, [])
 
   // GET recipes from API
   useEffect(() => {
-    fetch('/recipes', {
-      method: 'GET',
-      credentials: 'include'
-    })
-    .then(result => result.json())
-    .then(data => setRecipes(data.data))
-    .then(() => setRecipesLoaded(true))
-    .catch(err => console.log(err))
+    fetch(
+      "https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes",
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    )
+      .then((result) => result.json())
+      .then((data) => setRecipes(data.data))
+      .then(() => setRecipesLoaded(true))
+      .catch((err) => console.log(err));
   }, [recipesLoaded])
 
   // GET comments from API
   useEffect(() => {
-    fetch('/comments', {
-      method: 'GET',
-      credentials: 'include'
-    })
-    .then(result => result.json())
-    .then(data => setComments(data.data))
-    .then(() => setCommentsLoaded(true))
-    .catch(err => console.log(err))
+    fetch(
+      "https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments",
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    )
+      .then((result) => result.json())
+      .then((data) => setComments(data.data))
+      .then(() => setCommentsLoaded(true))
+      .catch((err) => console.log(err));
   }, [commentsLoaded])
   
   const handleLogout = () => {
-    fetch('/auth/logout')
-    .then(() => {
+    fetch(
+      "https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/auth/logout"
+    ).then(() => {
       setIsLoggedIn(false);
       setCurrentUser(null);
-      history.push('/login');
-    })
+      history.push("/login");
+    });
   }
 
   return (

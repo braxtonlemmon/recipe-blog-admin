@@ -21,15 +21,18 @@ function RecipeFormContainer({ setRecipesLoaded }) {
   
   useEffect(() => {
     if (recipeid) {
-      fetch(`/recipes/${recipeid}`, {
-        credentials: 'include',
-        method: 'GET'
-      })
-      .then(result => result.json())
-      .then(final => {
+      fetch(
+        `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${recipeid}`,
+        {
+          credentials: "include",
+          method: "GET",
+        }
+      )
+        .then((result) => result.json())
+        .then((final) => {
           setRecipe(final.data);
         })
-      .catch(err => console.log('problem!'))
+        .catch((err) => console.log("problem!"));
     }
    }, [recipeid])
 
@@ -59,68 +62,74 @@ function RecipeFormContainer({ setRecipesLoaded }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('/recipes', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        title: data.title,
-        ingredients: JSON.stringify(data.ingredients),
-        steps: JSON.stringify(data.steps),
-        intro: data.intro,
-        duration: data.duration,
-        images: JSON.stringify(data.images),
-        quote: data.quote,
-        is_published: data.is_published
-      })
-    })
-    .then(response => {
-      if (response.ok && response.status === 200) {
-        return response.json();
+    fetch(
+      "https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          title: data.title,
+          ingredients: JSON.stringify(data.ingredients),
+          steps: JSON.stringify(data.steps),
+          intro: data.intro,
+          duration: data.duration,
+          images: JSON.stringify(data.images),
+          quote: data.quote,
+          is_published: data.is_published,
+        }),
       }
-      throw new Error('Network response was not okay uploading recipe');
-    })
-    .then(data => {
-      setRecipesLoaded(false)
-      history.push(`/recipes`);
-    })
-    .catch(err => console.log(err.message));
+    )
+      .then((response) => {
+        if (response.ok && response.status === 200) {
+          return response.json();
+        }
+        throw new Error("Network response was not okay uploading recipe");
+      })
+      .then((data) => {
+        setRecipesLoaded(false);
+        history.push(`/recipes`);
+      })
+      .catch((err) => console.log(err.message));
   }
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    fetch(`/recipes/${recipeid}`, {
-      method: 'PUT',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: data.title,
-        ingredients: JSON.stringify(data.ingredients),
-        steps: JSON.stringify(data.steps),
-        intro: data.intro,
-        duration: data.duration,
-        images: JSON.stringify(data.images),
-        quote: data.quote,
-        is_published: data.is_published
-      })
-    })
-    .then(response => {
-      if (response.ok && response.status === 200) {
-        return response.json();
+    fetch(
+      `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${recipeid}`,
+      {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: data.title,
+          ingredients: JSON.stringify(data.ingredients),
+          steps: JSON.stringify(data.steps),
+          intro: data.intro,
+          duration: data.duration,
+          images: JSON.stringify(data.images),
+          quote: data.quote,
+          is_published: data.is_published,
+        }),
       }
-      throw new Error('Network response was not okay');
-    })
-    .then(data => {
-      setRecipesLoaded(false);
-      history.push(`/recipes`);
-    })
-    .catch(err => console.log(err.message));
+    )
+      .then((response) => {
+        if (response.ok && response.status === 200) {
+          return response.json();
+        }
+        throw new Error("Network response was not okay");
+      })
+      .then((data) => {
+        setRecipesLoaded(false);
+        history.push(`/recipes`);
+      })
+      .catch((err) => console.log(err.message));
   }
 
   const handleInputChange = (index, e) => {
