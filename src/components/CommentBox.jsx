@@ -60,6 +60,7 @@ function CommentBox(props) {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            'Authorization': sessionStorage.getItem('token')
           },
           credentials: "include",
         }

@@ -24,12 +24,12 @@ function CommentFormContainer({ comment, setCommentsLoaded, setEditing }) {
     fetch(
       `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments/${comment._id}`,
       {
-        // fetch('https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments', {
         method: "PUT",
         credentials: "include",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization': sessionStorage.getItem('token')
         },
         body: JSON.stringify({
           name: data.name,

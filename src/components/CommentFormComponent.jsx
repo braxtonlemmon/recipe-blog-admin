@@ -59,7 +59,6 @@ function CommentFormComponent({ data, handleChange, handleUpdate}) {
       >
         Update
       </Button>
-
     </FormWrapper>
 
   )

@@ -55,13 +55,7 @@ function RecipePage({ setCommentsLoaded, commentsLoaded }) {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(
-      `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${id}`,
-      {
-        credentials: "include",
-        method: "get",
-      }
-    )
+    fetch(`https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${id}`)
       .then((result) => result.json())
       .then((data) => {
         console.log(data.data);
@@ -71,13 +65,7 @@ function RecipePage({ setCommentsLoaded, commentsLoaded }) {
   }, [id]);
 
   useEffect(() => {
-    fetch(
-      `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments/${id}`,
-      {
-        credentials: "include",
-        method: "get",
-      }
-    )
+    fetch(`https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments/${id}`)
       .then((result) => result.json())
       .then((data) => setRecipeComments(data.data))
       .then(() => setRecipeCommentsLoaded(true));

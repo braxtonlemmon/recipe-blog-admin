@@ -6,7 +6,6 @@ import Home from './Home';
 import NoMatch from './NoMatch';
 import RecipePage from './RecipePage';
 import Comments from './Comments';
-// import { isLoggedIn } from '../utils/Utils';
 
 import {
   Switch,

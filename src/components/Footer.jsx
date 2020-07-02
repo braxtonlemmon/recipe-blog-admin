@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { isLoggedIn } from '../utils/Utils';
 
 const FooterBar = styled.footer`
   width: 100%;

@@ -71,7 +71,6 @@ function LoginFormContainer(props) {
         })
         .then((data) => {
           sessionStorage.setItem('token', data.token);
-          localStorage.setItem('banana', 3)
           props.handleLogin(data.name);
           history.push("/");
           return;

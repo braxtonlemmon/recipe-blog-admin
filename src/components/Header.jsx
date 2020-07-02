@@ -5,7 +5,6 @@ import { H1 } from './Shared';
 import Button from './shared/Button';
 
 const HeaderBar = styled.div`
-  /* position: fixed; */
   position: sticky;
   top: 0;
   left: 0;

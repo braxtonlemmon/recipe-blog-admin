@@ -13,7 +13,6 @@ const CommentRow = styled.div`
   align-items: flex-start;
   width: 90%;
   padding: 15px;
-  /* padding-bottom: 30px; */
   background: ${props => props.fromAdmin ? 'lightgreen' : 'rgba(247, 191, 247, 0.78)'};
   box-shadow: -2px 2px 2px lightgrey;
   margin: 15px;
@@ -81,6 +80,7 @@ function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization': sessionStorage.getItem('token')
         },
         body: JSON.stringify({
           name,
@@ -129,6 +129,7 @@ function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            'Authorization': sessionStorage.getItem('token')
           },
           credentials: "include",
         }

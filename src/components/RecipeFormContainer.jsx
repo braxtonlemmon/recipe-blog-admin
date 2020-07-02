@@ -21,13 +21,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
   
   useEffect(() => {
     if (recipeid) {
-      fetch(
-        `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${recipeid}`,
-        {
-          credentials: "include",
-          method: "GET",
-        }
-      )
+      fetch(`https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${recipeid}`)
         .then((result) => result.json())
         .then((final) => {
           setRecipe(final.data);
@@ -69,6 +63,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization': sessionStorage.getItem('token')
         },
         credentials: "include",
         body: JSON.stringify({
@@ -106,6 +101,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization': sessionStorage.getItem('token')
         },
         body: JSON.stringify({
           title: data.title,
