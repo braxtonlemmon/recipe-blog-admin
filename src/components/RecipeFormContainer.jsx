@@ -202,7 +202,6 @@ function RecipeFormContainer({ setRecipesLoaded }) {
 
   const handleRemoveImage = (e, index) => {
     e.preventDefault();
-    console.log(index);
     const values = [...data.images];
     values.splice(index, 1);
     setData({ ...data, images: values });
@@ -217,7 +216,6 @@ function RecipeFormContainer({ setRecipesLoaded }) {
 
   const handleRemoveIngredient = (e, index) => {
     e.preventDefault();
-    console.log(index);
     const values = [...data.ingredients];
     values.splice(index, 1);
     setData({...data, ingredients: values});

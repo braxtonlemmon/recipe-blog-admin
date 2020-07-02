@@ -58,7 +58,6 @@ function RecipePage({ setCommentsLoaded, commentsLoaded }) {
     fetch(`https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${id}`)
       .then((result) => result.json())
       .then((data) => {
-        console.log(data.data);
         setRecipe(data.data);
       })
       .then(() => setRecipeLoaded(true));

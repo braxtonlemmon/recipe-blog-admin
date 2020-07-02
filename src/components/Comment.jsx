@@ -71,7 +71,6 @@ function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
       e.preventDefault();
     }
     const { id, name, content, recipe, parent, level, fromAdmin } = comment;
-    console.log(`comment ${id} viewed...`);
     fetch(
       `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments/${id}`,
       {
@@ -101,7 +100,6 @@ function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
       })
       .then((data) => {
         removeUnseen(id);
-        console.log(data);
       })
       .catch((err) => console.log(err.message));
   }
@@ -114,7 +112,6 @@ function Comment({ comment, setCommentsLoaded, seen, removeUnseen }) {
 
   const handleEdit = (e) => {
     e.preventDefault();
-    console.log(`editing ${comment._id}`)
     setEditing(old => !old)
   }
  
