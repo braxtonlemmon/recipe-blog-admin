@@ -33,7 +33,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
    useEffect(() => {
      if (recipe) {
       setIsUpdating(true);
-      setData({ ...data, 
+      setData(data => ({ ...data, 
         title: recipe.title,
         ingredients: recipe.ingredients,
         steps: recipe.steps,
@@ -43,9 +43,9 @@ function RecipeFormContainer({ setRecipesLoaded }) {
         duration: recipe.duration,
         is_published: recipe.is_published,
         created: recipe.created
-      })
+      }))
     }
-   }, [recipe, data])
+   }, [recipe])
 
   const handleChange = (e) => {
     const name = e.target.name;
