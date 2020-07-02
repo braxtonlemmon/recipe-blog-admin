@@ -43,26 +43,29 @@ function App() {
   }
 
   // Fish for JWT
-  useEffect(() => {
-    fetch("https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/me", {
-      credentials: "include",
-      method: "GET",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Not yet logged in");
-        }
-      })
-      .then((data) => {
-        if (data.user) {
-          setIsLoggedIn(true);
-          setCurrentUser(data.user);
-        }
-      })
-      .catch((err) => console.log("problem"));
-  }, [])
+  // useEffect(() => {
+  //   fetch("https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/me", {
+  //     credentials: "include",
+  //     method: "GET",
+  //     headers: {
+  //       'Authorization': sessionStorage.getItem('token')
+  //     }
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         return response.json();
+  //       } else {
+  //         throw new Error("Not yet logged in");
+  //       }
+  //     })
+  //     .then((data) => {
+  //       if (data.user) {
+  //         setIsLoggedIn(true);
+  //         setCurrentUser(data.user);
+  //       }
+  //     })
+  //     .catch((err) => console.log("problem"));
+  // }, [])
 
   // GET recipes from API
   useEffect(() => {

@@ -45,11 +45,12 @@ function Recipes({ recipes, recipesLoaded, setRecipesLoaded, setCommentsLoaded }
         `https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${id}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            'Authorization': sessionStorage.getItem('token')
           },
-          credentials: "include",
           body: JSON.stringify({
             recipeid: id,
           }),
