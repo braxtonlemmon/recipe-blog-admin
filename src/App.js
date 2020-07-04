@@ -93,6 +93,7 @@ function App() {
     fetch("https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/auth/logout")
       .then(() => {
       setIsLoggedIn(false);
+      sessionStorage.removeItem('token');
       setCurrentUser(null);
       history.push("/login");
     });

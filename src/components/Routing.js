@@ -2,7 +2,6 @@ import React from 'react';
 import LoginFormContainer from './LoginFormContainer';
 import Recipes from './Recipes';
 import RecipeFormContainer from './RecipeFormContainer';
-import Home from './Home';
 import NoMatch from './NoMatch';
 import RecipePage from './RecipePage';
 import Comments from './Comments';
@@ -34,10 +33,15 @@ function Routing({
   
   return (
     <Switch>
-      <PrivateRoute 
-        exact 
-        path="/"                 
-        component={Home} 
+      <PrivateRoute
+        exact
+        path="/"
+        component={Recipes}
+        recipes={recipes}
+        recipesLoaded={recipesLoaded}
+        setRecipesLoaded={setRecipesLoaded}
+        setCommentsLoaded={setCommentsLoaded}
+        isLoggedIn={isLoggedIn}
       />
       <PrivateRoute 
         exact 
@@ -64,6 +68,7 @@ function Routing({
         component={RecipeFormContainer} 
         setRecipesLoaded={setRecipesLoaded}
         isLoggedIn={isLoggedIn}
+        isNew
       />
       <PrivateRoute 
         path='/recipes/:recipeid/edit' 

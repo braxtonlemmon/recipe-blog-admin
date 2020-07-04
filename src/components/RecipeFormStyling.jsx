@@ -13,6 +13,7 @@ export const ImageInput = styled.div`
 
 export const Form = styled.form`
   display: flex;
+  width: 90%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -24,6 +25,7 @@ export const Form = styled.form`
     height: 2.5em;
     line-height: 2.5em;
     outline: none;
+    width: 100%;
   }
   textarea {
     resize: none;
@@ -31,16 +33,19 @@ export const Form = styled.form`
     text-align: center;
     outline: none;
     font-size: 1.1em;
+    width: 90%;
   }
   h2 {
     font-size: 1.3em;
   }
   .ingredients-box, .steps-box, .images-box {
     background: none;
+    width: 100%;
   }
   .publish-box {
     background: none;
   }
+
 `;
 
 export const Row = styled.div`
@@ -50,8 +55,13 @@ export const Row = styled.div`
   align-items: center;
   margin: 5px 0;
   background: lightgray;
+  width: 100%;
+  max-width: 950px;
   padding: 8px;
   padding-bottom: 10px;
+  .step {
+    height: 120px;
+  }
 `;
 
 export const RowTop = styled.div`
@@ -84,14 +94,23 @@ export const Box = styled.div`
   align-items: center;
   padding: 10px;
   margin: 8px;
+  width: 100%;
+  max-width: 950px;
   .publish-row {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: lightgrey;
+    padding: 10px;
+    margin: 8px;
   }
   .publish-row >* {
     margin: 0 10px;
     cursor: pointer;
+  }
+  .checkbox {
+    height: 15px;
+    width: 15px;
   }
   background: lightgrey;
   padding: 8px;

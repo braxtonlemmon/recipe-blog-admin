@@ -62,6 +62,7 @@ function Comments({ allComments, commentsLoaded, setCommentsLoaded }) {
             viewAll &&
             comments.map(comment => (
               <Comment
+                key={comment.id}
                 comment={comment}
                 seen={true}
                 setCommentsLoaded={setCommentsLoaded}
@@ -72,6 +73,7 @@ function Comments({ allComments, commentsLoaded, setCommentsLoaded }) {
             viewUnseen &&
             unseen.map(comment => (
               <Comment
+                key={comment.id}
                 comment={comment}
                 removeUnseen={removeUnseen}
                 setCommentsLoaded={setCommentsLoaded}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import RecipeFormComponent from './RecipeFormComponent';
 import { useParams, useHistory } from 'react-router-dom';
 
-function RecipeFormContainer({ setRecipesLoaded }) {
+function RecipeFormContainer({ setRecipesLoaded, isNew }) {
   const history = useHistory();
   const { recipeid } = useParams();
   const [recipe, setRecipe] = useState(null);
@@ -32,7 +32,7 @@ function RecipeFormContainer({ setRecipesLoaded }) {
    }, [recipeid])
 
    useEffect(() => {
-     if (recipe) {
+     if (recipe !== null) {
       setIsUpdating(true);
       setData(data => ({ ...data, 
         title: recipe.title,
@@ -48,6 +48,24 @@ function RecipeFormContainer({ setRecipesLoaded }) {
       }))
     }
    }, [recipe])
+  
+  useEffect(() => {
+    if (isNew) {
+      setData(data => ({
+        title: '',
+        ingredients: [''],
+        steps: [''],
+        images: [''],
+        intro: '',
+        quote: '',
+        size: '',
+        is_published: false,
+        created: '',
+        duration: 0,
+      }))
+    }
+    setIsUpdating(false);
+  }, [isNew])
 
   const handleChange = (e) => {
     const name = e.target.name;

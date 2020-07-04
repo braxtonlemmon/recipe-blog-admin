@@ -16,7 +16,7 @@ function RecipeFormComponent(props) {
 
   return (
     <>
-      <H1>New Recipe</H1>
+      <H1>{props.isUpdating ? 'Edit Recipe' : 'New Recipe'}</H1>
       <Form name="recipeForm">
         <Box className="images-box">
           <h2>Images</h2>
@@ -46,6 +46,7 @@ function RecipeFormComponent(props) {
                 placeholder="Image"
                 value={props.data.images[index]}
                 onChange={(e) => props.handleInputChange(index, e)}
+                required
               />
             </Row>
           ))}
@@ -62,6 +63,7 @@ function RecipeFormComponent(props) {
             placeholder="Recipe title"
             value={props.data.title}
             onChange={props.handleChange}
+            required
           />
         </Box>
         <Box>
@@ -73,6 +75,7 @@ function RecipeFormComponent(props) {
             placeholder="Serving size"
             value={props.data.size}
             onChange={props.handleChange}
+            required
           />
         </Box>
         <Box>
@@ -83,6 +86,7 @@ function RecipeFormComponent(props) {
             name="duration"
             value={props.data.duration}
             onChange={props.handleChange}
+            required
           />
         </Box>
         <Box>
@@ -95,6 +99,7 @@ function RecipeFormComponent(props) {
             cols="30"
             rows="10"
             placeholder="Description of recipe"
+            required
           ></textarea>
         </Box>
         <Box>
@@ -104,9 +109,8 @@ function RecipeFormComponent(props) {
             id="quote"
             value={props.data.quote}
             onChange={props.handleChange}
-            col="20"
-            rows="10"
             placeholder="Quote about recipe"
+            required
           ></textarea>
         </Box>
         <Box className="ingredients-box">
@@ -137,6 +141,7 @@ function RecipeFormComponent(props) {
                 placeholder="Ingredient"
                 value={props.data.ingredients[index]}
                 onChange={(e) => props.handleInputChange(index, e)}
+                required
               />
             </Row>
           ))}
@@ -166,13 +171,13 @@ function RecipeFormComponent(props) {
                 </MoveButtons>
               </RowTop>
               <textarea
+                className="step"
                 id="step"
                 name="step"
                 placeholder="Step"
-                cols="25"
-                rows="4"
                 value={props.data.steps[index]}
                 onChange={(e) => props.handleInputChange(index, e)}
+                required
               ></textarea>
             </Row>
           ))}
@@ -183,7 +188,8 @@ function RecipeFormComponent(props) {
         <Box className="publish-box">
           <div className="publish-row">
             <label htmlFor="is_published">Publish?</label>
-            <input 
+            <input
+              className="checkbox" 
               type="checkbox" 
               name="is_published" 
               id="is_published"

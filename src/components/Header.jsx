@@ -47,11 +47,10 @@ function Header(props) {
       )}
       {props.isLoggedIn === true && (
         <Buttons>
-          <Link to="/"><Button>Home</Button></Link>
           <Link to="/recipes"><Button>Recipes</Button></Link>
           <Link to="/comments"><Button>Comments</Button></Link>
-          <Link to="/new"><Button>New</Button></Link>
-          <Button onClick={props.handleLogout}>Log out</Button>
+          <Link to="/new"><Button>+</Button></Link>
+          <Button onClick={props.handleLogout}>Logout</Button>
         </Buttons>
       )}
     </HeaderBar>
