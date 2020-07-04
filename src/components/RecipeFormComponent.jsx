@@ -65,6 +65,17 @@ function RecipeFormComponent(props) {
           />
         </Box>
         <Box>
+          <label htmlFor="size">Size</label>
+          <input
+            type="text"
+            id="size"
+            name="size"
+            placeholder="Serving size"
+            value={props.data.size}
+            onChange={props.handleChange}
+          />
+        </Box>
+        <Box>
           <label htmlFor="duration">Duration (min)</label>
           <input
             type="number"
