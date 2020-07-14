@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Peel the Garlic Admin",
+  "name": "Admin interface for Peel the Garlic recipe site",
   "icons": [
     {
       "src": "favicon.ico",
