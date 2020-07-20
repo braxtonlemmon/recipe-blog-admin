@@ -11,13 +11,20 @@ function RecipeFormContainer({ setRecipesLoaded, isNew }) {
     title: '',
     ingredients: [''],
     steps: [''],
-    images: [''],
+    size: '',
     intro: '',
     quote: '',
-    size: '',
+    images: [''],
     is_published: false,
     created: '',
-    duration: 0
+    // duration: 0
+    description: '',
+    keywords: '',
+    prep_time: 0,
+    cook_time: 0,
+    category: '',
+    cook_method: '',
+    cuisine: '',
   })
   
   useEffect(() => {
@@ -42,9 +49,16 @@ function RecipeFormContainer({ setRecipesLoaded, isNew }) {
         intro: recipe.intro,
         quote: recipe.quote,
         images: recipe.images,
-        duration: recipe.duration,
+        // duration: recipe.duration,
         is_published: recipe.is_published,
-        created: recipe.created
+        created: recipe.created,
+        description: recipe.description,
+        keywords: recipe.keywords,
+        prep_time: recipe.prep_time,
+        cook_time: recipe.cook_time,
+        category: recipe.category,
+        cook_method: recipe.cook_method,
+        cuisine: recipe.cuisine
       }))
     }
    }, [recipe])
@@ -55,13 +69,20 @@ function RecipeFormContainer({ setRecipesLoaded, isNew }) {
         title: '',
         ingredients: [''],
         steps: [''],
-        images: [''],
+        size: '',
         intro: '',
         quote: '',
-        size: '',
+        images: [''],
         is_published: false,
         created: '',
-        duration: 0,
+        // duration: 0,
+        description: '',
+        keywords: '',
+        prep_time: 0,
+        cook_time: 0,
+        category: '',
+        cook_method: '',
+        cuisine: '',
       }))
     }
     setIsUpdating(false);
@@ -90,12 +111,19 @@ function RecipeFormContainer({ setRecipesLoaded, isNew }) {
           title: data.title,
           ingredients: JSON.stringify(data.ingredients),
           steps: JSON.stringify(data.steps),
-          intro: data.intro,
           size: data.size,
-          duration: data.duration,
-          images: JSON.stringify(data.images),
+          intro: data.intro,
           quote: data.quote,
+          images: JSON.stringify(data.images),
           is_published: data.is_published,
+          // duration: data.duration,
+          description: data.description,
+          keywords: data.keywords,
+          prep_time: data.prep_time,
+          cook_time: data.cook_time,
+          category: data.category,
+          cook_method: data.cook_method,
+          cuisine: data.cuisine
         }),
       }
     )
@@ -106,6 +134,7 @@ function RecipeFormContainer({ setRecipesLoaded, isNew }) {
         throw new Error("Network response was not okay uploading recipe");
       })
       .then((data) => {
+        console.log('great');
         setRecipesLoaded(false);
         history.push(`/recipes`);
       })
@@ -128,12 +157,19 @@ function RecipeFormContainer({ setRecipesLoaded, isNew }) {
           title: data.title,
           ingredients: JSON.stringify(data.ingredients),
           steps: JSON.stringify(data.steps),
-          intro: data.intro,
           size: data.size,
-          duration: data.duration,
-          images: JSON.stringify(data.images),
+          intro: data.intro,
           quote: data.quote,
+          images: JSON.stringify(data.images),
           is_published: data.is_published,
+          // duration: data.duration,
+          description: data.description,
+          keywords: data.keywords,
+          prep_time: data.prep_time,
+          cook_time: data.cook_time,
+          category: data.category,
+          cook_method: data.cook_method,
+          cuisine: data.cuisine
         }),
       }
     )

@@ -78,7 +78,7 @@ function RecipeFormComponent(props) {
             required
           />
         </Box>
-        <Box>
+        {/* <Box>
           <label htmlFor="duration">Duration (min)</label>
           <input
             type="number"
@@ -88,9 +88,45 @@ function RecipeFormComponent(props) {
             onChange={props.handleChange}
             required
           />
+        </Box> */}
+        <Box>
+          <label htmlFor="prep_time">Prep time (min)</label>
+          <input
+            type="number"
+            id="prep_time"
+            name="prep_time"
+            value={props.data.prep_time}
+            onChange={props.handleChange}
+            required
+          />
         </Box>
         <Box>
-          <label htmlFor="intro">Description</label>
+          <label htmlFor="cook_time">Cook time (min)</label>
+          <input
+            type="number"
+            id="cook_time"
+            name="cook_time"
+            value={props.data.cook_time}
+            onChange={props.handleChange}
+            required
+          />
+        </Box>
+
+        <Box>
+          <label htmlFor="description">Short recipe description</label>
+          <textarea
+            name="description"
+            id="description"
+            value={props.data.description}
+            onChange={props.handleChange}
+            cols="30"
+            rows="10"
+            placeholder="Description of recipe"
+            required
+          ></textarea>
+        </Box>
+        <Box>
+          <label htmlFor="intro">Blog section</label>
           <textarea
             name="intro"
             id="intro"
@@ -98,7 +134,7 @@ function RecipeFormComponent(props) {
             onChange={props.handleChange}
             cols="30"
             rows="10"
-            placeholder="Description of recipe"
+            placeholder="Blog intro section"
             required
           ></textarea>
         </Box>
@@ -112,6 +148,54 @@ function RecipeFormComponent(props) {
             placeholder="Quote about recipe"
             required
           ></textarea>
+        </Box>
+        <Box>
+          <label htmlFor="keywords">Keywords (comma-separated)</label>
+          <input
+            type="text"
+            id="keywords"
+            name="keywords"
+            placeholder="Recipe keywords"
+            value={props.data.keywords}
+            onChange={props.handleChange}
+            required
+          />
+        </Box>
+        <Box>
+          <label htmlFor="category">Category (dinner, lunch, dessert, etc.)</label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            placeholder="Recipe category"
+            value={props.data.category}
+            onChange={props.handleChange}
+            required
+          />
+        </Box>
+        <Box>
+          <label htmlFor="cook_method">Cooking method (bake, roast, fry, etc.) (</label>
+          <input
+            type="text"
+            id="cook_method"
+            name="cook_method"
+            placeholder="Recipe cook_method"
+            value={props.data.cook_method}
+            onChange={props.handleChange}
+            required
+          />
+        </Box>
+        <Box>
+          <label htmlFor="cuisine">Cuisine (French, American, etc.)</label>
+          <input
+            type="text"
+            id="cuisine"
+            name="cuisine"
+            placeholder="Recipe cuisine"
+            value={props.data.cuisine}
+            onChange={props.handleChange}
+            required
+          />
         </Box>
         <Box className="ingredients-box">
           <h2>Ingredients</h2>
