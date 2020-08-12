@@ -76,24 +76,39 @@ function Recipes({ recipes, recipesLoaded, setRecipesLoaded, setCommentsLoaded }
           <Row>
             <p className="header item">Recipe</p>
             <p className="header item">Published</p>
-            <p className="header item"></p>
-            <p className="header item"></p>
+            <p className="header item"></p> {/* publish toggle button */}
+            <p className="header item"></p> {/* edit */}
+            <p className="header item"></p> {/* trash */}
+            <p className="header item"></p> {/* send newsletter */}
+            <p className="header item"></p> {/* sent? */}
           </Row>
           {recipes.map((recipe, index) => (
             <Row key={recipe.title}>
+              {/* title */}
               <div className="item">
                 <Link to={`/recipes/${recipe._id}`}>
                   <p>{recipe.title}</p>
                 </Link>
               </div>
+              
+              {/* publish date */}
               <div className="item">
                 <p>{recipe.is_published ? recipe.publish_date_formatted : 'Not yet'}</p>
               </div>
+              
+              {/* publish toggle button */}
+              <div className="item"> 
+                p 
+              </div>
+              
+              {/* edit */}
               <div className="item">
                 <Link to={`/recipes/${recipe._id}/edit`}>
                   <Emoji symbol="🖉" label="edit" />
                 </Link>
               </div>
+
+              {/* delete */}
               <div className="item">
                 <Emoji 
                   className="button" 
@@ -101,6 +116,18 @@ function Recipes({ recipes, recipesLoaded, setRecipesLoaded, setCommentsLoaded }
                   symbol="🗑️"
                   label="delete"
                 />
+              </div>
+
+              {/* send newsletter */}
+              <div className="item">
+                <Link to={`/newsletter/${recipe._id}`}>
+                  <Emoji symbol="🖂" label="send" />
+                </Link>
+              </div>
+
+              {/* newsletter sent? */}
+              <div className="item">
+                ?
               </div>
             </Row>
           ))}

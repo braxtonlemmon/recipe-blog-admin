@@ -5,6 +5,7 @@ import RecipeFormContainer from './RecipeFormContainer';
 import NoMatch from './NoMatch';
 import RecipePage from './RecipePage';
 import Comments from './Comments';
+import NewsletterFormContainer from './NewsletterFormContainer';
 
 import {
   Switch,
@@ -50,6 +51,12 @@ function Routing({
         allComments={comments}
         commentsLoaded={commentsLoaded}
         setCommentsLoaded={setCommentsLoaded}
+        isLoggedIn={isLoggedIn}
+      />
+      <PrivateRoute
+        exact
+        path='/newsletter/:recipeid'
+        component={NewsletterFormContainer}
         isLoggedIn={isLoggedIn}
       />
       <PrivateRoute 
