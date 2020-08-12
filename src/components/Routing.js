@@ -58,6 +58,7 @@ function Routing({
         path='/newsletter/:recipeid'
         component={NewsletterFormContainer}
         isLoggedIn={isLoggedIn}
+        setRecipesLoaded={setRecipesLoaded}
       />
       <PrivateRoute 
         exact 

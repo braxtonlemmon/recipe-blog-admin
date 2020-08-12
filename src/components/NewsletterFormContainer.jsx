@@ -7,7 +7,7 @@ function makeSlug(title) {
   return strippedTitle.toLowerCase().replace(/ /g, '-');
 }
 
-function NewsletterFormContainer({ recipes }) {
+function NewsletterFormContainer({ setRecipesLoaded }) {
   const history = useHistory();
   const { recipeid } = useParams();
   const [recipe, setRecipe] = useState(null);
@@ -108,8 +108,28 @@ function NewsletterFormContainer({ recipes }) {
     })
     .then(data => {
       console.log('newsletter sent');
-      history.push('/recipes');
+      fetch(`https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/recipes/${recipeid}/newsletter`, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          // 'Authorization': sessionStorage.getItem('token')
+        },
+        // credentials: 'include',
+      })
+      .then(response => {
+        if (response.ok && response.status === 200) {
+          return response.json();
+        }
+        throw new Error('Network response was not okay upon updating newsletter status of recipe');
+      })
+      .then(data => {
+        console.log(data);
+        setRecipesLoaded(false);
+        history.push('/recipes');
+      })
     })
+
     .catch(err => console.log(err.message));
   }
 

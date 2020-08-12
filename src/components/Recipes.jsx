@@ -127,7 +127,7 @@ function Recipes({ recipes, recipesLoaded, setRecipesLoaded, setCommentsLoaded }
 
               {/* newsletter sent? */}
               <div className="item">
-                ?
+                {recipe.newsletter ? '1' : '0'}
               </div>
             </Row>
           ))}
