@@ -68,9 +68,7 @@ function Recipes({ recipes, recipesLoaded, setRecipesLoaded, setCommentsLoaded }
     }
   }
 
-  const handlePublish = (e) => {
-    console.log(e.target.checked);
-  }
+
     
   if (recipesLoaded) {
     return (
