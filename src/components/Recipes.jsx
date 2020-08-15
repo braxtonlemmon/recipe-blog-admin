@@ -67,6 +67,10 @@ function Recipes({ recipes, recipesLoaded, setRecipesLoaded, setCommentsLoaded }
         .catch((err) => console.log(err.message));
     }
   }
+
+  const handlePublish = (e) => {
+    console.log(e.target.checked);
+  }
     
   if (recipesLoaded) {
     return (
@@ -98,9 +102,9 @@ function Recipes({ recipes, recipesLoaded, setRecipesLoaded, setCommentsLoaded }
               
               {/* publish toggle button */}
               <div className="item"> 
-                p 
+                {recipe.is_published ? '1': '0'}
               </div>
-              
+
               {/* edit */}
               <div className="item">
                 <Link to={`/recipes/${recipe._id}/edit`}>

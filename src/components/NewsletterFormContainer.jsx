@@ -89,9 +89,9 @@ function NewsletterFormContainer({ setRecipesLoaded }) {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('token')
+        // 'Authorization': sessionStorage.getItem('token')
       },
-      credentials: 'include',
+      // credentials: 'include',
       body: JSON.stringify({
         title: formData.title,
         description: formData.description,
